@@ -1,0 +1,170 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title">Başvuru Listele Ekranı</h3>
+      </div>
+      <div class="card-body">
+        <div class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12">
+              <div
+                class="dataTables_wrapper dt-bootstrap4 no-footer"
+              >
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-3 col-sm-3">
+                        <a
+                          routerlink="/basvuruekle"
+                          class="btn btn-outline-primary btn-block"
+                          href="/basvuruekle"
+                          ><i class="fa fa-plus"></i> &nbsp; Başvuru Ekle</a
+                        >
+                      </div>
+                      <div class="col-lg-3 col-md-3 col-sm-3"></div>
+                      <div class="col-lg-6 col-md-6 col-sm-6">
+                        <form [formGroup]="form" class="ng-untouched ng-pristine ng-invalid">
+                          <div class="row">
+                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                            <div class="col-md-6">
+                              <div class="form-group">
+                                <input
+                                  type="text"
+                                  formControlName="searchInput"
+                                  placeholder="Ara"
+                                  class="form-control ng-untouched ng-pristine ng-invalid"
+                                />
+                              </div>
+                            </div>
+                         
+                          <div class="col-md-2">
+                            <div class="form-group">
+                              <button
+                                type="submit"
+                                class="btn btn-primary btn-block"
+                                (click)="Search()"
+                                [disabled]="form.invalid"
+                              >
+                                <i class="fas fa-search"></i>
+                                &nbsp; ARA
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                        </form>
+                      </div>
+                    </div>
+
+                    <hr />
+                    <table
+                      datatable
+                      [dtOptions]="dtOptions"
+                      [dtTrigger]="dtTrigger"
+                      class="table table-bordered table-striped dataTable dtr-inline no-footer"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Yaş</th>
+                          <th>Cinsiyet</th>
+                          <th>Öğrenim Durumu</th>
+                          <th>Askerlik Durumu</th>
+                          <th>Meslek</th>
+                          <th>İl Adı</th>
+                          <th>İlçe Adı</th>
+                          <th>Mahalle Adı</th>
+                          <th>Adres</th>
+                          <th>Dil</th>
+                          <th>Programlama Dilleri</th>
+                          <th>Sertifikalar</th>
+                          <th>Hobiler</th>
+                          <th style="width: 95px">İşlemler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let basvuru of basvurular
+                              | paginate
+                                : {
+                                    id: 'listing_pagination',
+                                    itemsPerPage: kayitSayi,
+                                    currentPage: sayfa,
+                                    totalItems: pageCount
+                                  }
+                          "
+                        >
+                          <td>{{ basvuru.DogumTarihi }}</td>
+                          <td>{{ basvuru.Cinsiyet }}</td>
+                          <td>{{ basvuru.OgrenimDurumu }}</td>
+                          <td>{{ basvuru.AskerlikDurumu }}</td>
+                          <td>{{ basvuru.Meslek }}</td>
+                          <td>{{ basvuru.Il }}</td>
+                          <td>{{ basvuru.Ilce }}</td>
+                          <td>{{ basvuru.Mahalle }}</td>
+                          <td>{{ basvuru.Adres }}</td>
+                          <td>{{ basvuru.Dil }}</td>
+                          <td>{{ basvuru.ProgramlamaDilleri }}</td>
+                          <td>{{ basvuru.Sertifikalar }}</td>
+                          <td>{{ basvuru.Hobiler }}</td>
+                          <td>
+                           
+                            <button
+                              class="btn btn-danger btn-xs"
+                              style="width: 44px; margin-left: 6px"
+                              (click)="Sil(basvuru.Id)"
+                            >
+                              <span style="color: white"
+                                ><i class="fa fa-trash"></i
+                              ></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                          <div class="form-group">
+                            <select
+                              #t
+                              (change)="sayfaGetir(0, t.value)"
+                              class="custom-select form-control"
+                              [value]="10"
+                            >
+                              <option [value]="5">5</option>
+                              <option [value]="10">10</option>
+                              <option [value]="25">25</option>
+                              <option [value]="50">50</option>
+                              <option [value]="100">100</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <pagination-controls
+                            id="listing_pagination"
+                            directionLinks:1
+                            (pageChange)="
+                              sayfaGetir(
+                                ($event - 1) * kayitSayi,
+                                kayitSayi,
+                                $event
+                              )
+                            "
+                          ></pagination-controls>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

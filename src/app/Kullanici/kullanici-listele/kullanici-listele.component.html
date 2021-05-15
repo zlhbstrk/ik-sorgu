@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card card-primary card-outline">
+      <div class="card-header">
+        <h3 class="card-title">Kullanıcı Listele Ekranı</h3>
+      </div>
+      <div class="card-body">
+        <div id="example1_wrapper" class="dataTables_wrapper dt-bootstrap4">
+          <div class="row">
+            <div class="col-sm-12">
+              <div
+                id="example1_wrapper"
+                class="dataTables_wrapper dt-bootstrap4 no-footer"
+              >
+                <div class="row">
+                  <div class="col-sm-12">
+                    <div class="row">
+                      <div class="col-lg-3 col-md-3 col-sm-3">
+                        <a
+                          routerlink="/kullaniciekle"
+                          class="btn btn-outline-primary btn-block"
+                          href="/kullaniciekle"
+                          ><i class="fa fa-plus"></i> &nbsp; Kullanıcı Ekle</a
+                        >
+                      </div>
+                    </div>
+                    <hr />
+                    <table
+                      datatable
+                      [dtOptions]="dtOptions"
+                      [dtTrigger]="dtTrigger"
+                      class="table table-bordered table-striped dataTable dtr-inline no-footer"
+                    >
+                      <thead>
+                        <tr>
+                          <th>Adı</th>
+                          <th>Soyadı</th>
+                          <th>E-mail</th>
+                          <th>Yetki</th>
+                          <th style="width: 95px">İşlemler</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        <tr
+                          *ngFor="
+                            let kullanici of kullanicilar
+                              | paginate
+                                : {
+                                    id: 'listing_pagination',
+                                    itemsPerPage: kayitSayi,
+                                    currentPage: sayfa,
+                                    totalItems: pageCount
+                                  }
+                          "
+                        >
+                          <td>{{ kullanici.Ad }}</td>
+                          <td>{{ kullanici.Soyad }}</td>
+                          <td>{{ kullanici.Email }}</td>
+                          <td *ngIf="kullanici.Yetki == 1">
+                            Sistem Yöneticisi
+                          </td>
+                          <td *ngIf="kullanici.Yetki == 2">Kullanıcı</td>
+                          <td>
+                            <a
+                              class="btn btn-primary btn-xs"
+                              routerLink="/kullaniciduzenle/{{ kullanici.Id }}"
+                              style="width: 44px"
+                              ><span style="color: white"
+                                ><i class="fa fa-search"></i></span
+                            ></a>
+                            <button
+                              class="btn btn-danger btn-xs"
+                              style="width: 44px; margin-left: 6px"
+                              (click)="Sil(kullanici.Id)"
+                            >
+                              <span style="color: white"
+                                ><i class="fa fa-trash"></i
+                              ></span>
+                            </button>
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <br />
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="col-lg-2 col-md-2 col-sm-2">
+                          <div class="form-group">
+                            <select
+                              #t
+                              (change)="sayfaGetir(0, t.value)"
+                              class="custom-select form-control"
+                              [value]="10"
+                            >
+                              <option [value]="5">5</option>
+                              <option [value]="10">10</option>
+                              <option [value]="25">25</option>
+                              <option [value]="50">50</option>
+                              <option [value]="100">100</option>
+                            </select>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="col-md-6">
+                        <div class="col-lg-12 col-md-12 col-sm-12">
+                          <pagination-controls
+                            id="listing_pagination"
+                            directionLinks:1
+                            (pageChange)="
+                              sayfaGetir(
+                                ($event - 1) * kayitSayi,
+                                kayitSayi,
+                                $event
+                              )
+                            "
+                          ></pagination-controls>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

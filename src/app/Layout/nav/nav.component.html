@@ -1,0 +1,86 @@
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+  <!-- Brand Logo -->
+  <a class="brand-link"> &nbsp;  &nbsp;  &nbsp;
+    <i class="fas fa-user-shield"></i> &nbsp; 
+    <span class="brand-text font-weight-light"> IK Sorgu Projesi</span>
+  </a>
+
+  <!-- Sidebar -->
+  <div
+    class="sidebar os-host os-theme-light os-host-resize-disabled os-host-scrollbar-horizontal-hidden os-host-transition os-host-scrollbar-vertical-hidden"
+  >
+    <div class="os-resize-observer-host observed">
+      <div class="os-resize-observer" style="left: 0px; right: auto"></div>
+    </div>
+    <div
+      class="os-size-auto-observer observed"
+      style="height: calc(100% + 1px); float: left"
+    >
+      <div class="os-resize-observer"></div>
+    </div>
+    <div
+      class="os-content-glue"
+      style="margin: 0px -8px; width: 300px; height: 1000px"
+    ></div>
+    <div class="os-padding">
+      <div class="os-viewport os-viewport-native-scrollbars-invisible">
+        <div
+          class="os-content"
+          style="padding: 0px 8px; height: 100%; width: 100%"
+        >
+          <!-- Sidebar user panel (optional) -->
+          <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+            <div class="info">
+              <a class="d-block"> &nbsp;  &nbsp;  &nbsp; &nbsp; Hoşgeldin {{kulAdi}}
+              </a>
+            </div>
+          </div>
+          <!-- Sidebar Menu -->
+          <nav class="mt-2">
+            <ul
+              class="nav nav-pills nav-sidebar flex-column"
+              data-widget="treeview"
+              role="menu"
+              data-accordion="false"
+            >
+            <!-- *ngIf="isAdmin" -->
+              <li class="nav-item" *ngIf="isAdmin">
+                <a class="nav-link" routerLink="/kullanicilistele">
+                  <i class="fas fa-user"></i> &nbsp;
+                  <p>
+                    Kullanıcı
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/basvurulistele">
+                  <i class="fas fa-layer-group"></i> &nbsp;
+                  <p>
+                    Başvurular
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item" *ngIf="isAdmin">
+                <a class="nav-link" routerLink="/loglistele">
+                  <i class="fas fa-clipboard-list"></i> &nbsp;
+                  <p>
+                    Log
+                  </p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" routerLink="/sifreduzenle">
+                  <i class="fas fa-unlock-alt"></i> &nbsp;
+                  <p>
+                    Şifre Değiştir
+                  </p>
+                </a>
+              </li>
+            </ul>
+          </nav>
+          <!-- /.sidebar-menu -->
+        </div>
+      </div>
+    </div>
+  </div>
+</aside>
