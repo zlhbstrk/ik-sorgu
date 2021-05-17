@@ -3,7 +3,7 @@ export class Basvuru {
     Ad!: string;
     Soyad!: string;
     Email!: string;
-    DogumTarihi!: Date;
+    Yas!: number;
     Cinsiyet!: string;
     OgrenimDurumu!: string;
     AskerlikDurumu!: string;

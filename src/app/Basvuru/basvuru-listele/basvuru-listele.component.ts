@@ -15,9 +15,6 @@ export class BasvuruListeleComponent implements OnInit {
     private basvuruSevis: BasvuruService,public datepipe: DatePipe
   ) {}
 
-  dtOptions = {};
-  dtTrigger: Subject<Basvuru> = new Subject<Basvuru>();
-
   basvurular: any[] = [];
   kayitSayi: number = 10;
   sayfa: number = 1;
@@ -30,44 +27,23 @@ export class BasvuruListeleComponent implements OnInit {
     });
 
   ngOnInit(): void {
-    this.dtOptions = {
-      dom: 'Brt',
-      pagingType: 'full_numbers',
-      buttons: ['excel'],
-      responsive: true
-    };
-
     this.basvuruSevis.GetirBasvuru().subscribe((data) => {
- 
-      data.forEach(x=>{
-        var date1:any = new Date();
-        var date2 :any= new Date(x.DogumTarihi);
-        //var dt = this.datepipe.transform(new Date() - (x.DogumTarihi as Date) , 'yyyy-MM-dd');
-        var yas = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
-        x.DogumTarihi = yas.toString();
-
-        
-      })
       this.basvurular = data;
-
-      this.dtTrigger.next();
     });
   }
 
   Search() {
     const input = this.form.controls['searchInput'].value;
-    if(input)
+    if(input && input != '')
     {
       this.basvuruSevis.GetSearch(input).subscribe((data) => {
-        
-        data.forEach(x=>{
-          
-          x.DogumTarihi = 2021 - x.DogumTarihi.getFullYear();
-        })
-
         this.basvurular = data;
       });
-    } 
+    } else{
+      this.basvuruSevis.GetirBasvuru().subscribe((data) => {
+        this.basvurular = data;
+      });
+    }
   }
 
   Sil(id: string) {

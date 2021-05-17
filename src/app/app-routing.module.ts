@@ -9,6 +9,7 @@ import { BasvuruEkleComponent } from './Basvuru/basvuru-ekle/basvuru-ekle.compon
 import { BasvuruListeleComponent } from './Basvuru/basvuru-listele/basvuru-listele.component';
 
 const routes: Routes = [
+  { path: '', redirectTo: 'basvurulistele', pathMatch: 'full' },
   { path: 'kullaniciekle', component: KullaniciEkleComponent, canActivate:[LoginGuard]},
   { path: 'basvuruekle', component: BasvuruEkleComponent, canActivate:[LoginGuard]},
   { path: 'kullanicilistele', component: KullaniciListeleComponent, canActivate:[LoginGuard]},

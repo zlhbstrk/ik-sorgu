@@ -1,32 +1,26 @@
 <div class="row">
-  <div class="col-md-12">
-    <div class="card card-primary card-outline">
-      <div class="card-header">
-        <h3 class="card-title">Başvuru Listele Ekranı</h3>
-      </div>
-      <div class="card-body">
-        <div class="dataTables_wrapper dt-bootstrap4">
-          <div class="row">
-            <div class="col-sm-12">
-              <div
-                class="dataTables_wrapper dt-bootstrap4 no-footer"
-              >
-                <div class="row">
-                  <div class="col-sm-12">
+    <div class="col-md-12">
+        <div class="card card-primary card-outline">
+            <div class="card-header">
+                <h3 class="card-title">Başvuru Listele Ekranı</h3>
+            </div>
+            <div class="card-body">
+                <div class="dataTables_wrapper dt-bootstrap4">
                     <div class="row">
-                      <div class="col-lg-3 col-md-3 col-sm-3">
-                        <a
-                          routerlink="/basvuruekle"
-                          class="btn btn-outline-primary btn-block"
-                          href="/basvuruekle"
-                          ><i class="fa fa-plus"></i> &nbsp; Başvuru Ekle</a
+                        <div class="col-sm-12">
+                            <div class="dataTables_wrapper dt-bootstrap4 no-footer">
+                                <div class="row">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-lg-3 col-md-3 col-sm-3">
+                                                <a routerlink="/basvuruekle" class="btn btn-outline-primary btn-block" href="/basvuruekle"><i class="fa fa-plus"></i> &nbsp; Başvuru Ekle</a
                         >
                       </div>
                       <div class="col-lg-3 col-md-3 col-sm-3"></div>
                       <div class="col-lg-6 col-md-6 col-sm-6">
                         <form [formGroup]="form" class="ng-untouched ng-pristine ng-invalid">
                           <div class="row">
-                            <div class="col-lg-4 col-md-4 col-sm-4"></div>
+                            <div class="col-md-2"></div>
                             <div class="col-md-6">
                               <div class="form-group">
                                 <input
@@ -38,7 +32,7 @@
                               </div>
                             </div>
                          
-                          <div class="col-md-2">
+                          <div class="col-md-4">
                             <div class="form-group">
                               <button
                                 type="submit"
@@ -63,14 +57,15 @@
                     >
                       <thead>
                         <tr>
+                          <th>İsim</th>
                           <th>Yaş</th>
                           <th>Cinsiyet</th>
-                          <th>Öğrenim Durumu</th>
-                          <th>Askerlik Durumu</th>
+                          <th>Öğrenim</th>
+                          <th>Askerlik</th>
                           <th>Meslek</th>
-                          <th>İl Adı</th>
-                          <th>İlçe Adı</th>
-                          <th>Mahalle Adı</th>
+                          <th>İl</th>
+                          <th>İlçe</th>
+                          <th>Mahalle</th>
                           <th>Adres</th>
                           <th>Dil</th>
                           <th>Programlama Dilleri</th>
@@ -83,7 +78,8 @@
                         <tr
                           *ngFor="let basvuru of basvurular"
                         >
-                          <td>{{  basvuru.DogumTarihi }}</td>
+                          <td>{{basvuru.Ad +" "+ basvuru.Soyad}}</td>
+                          <td>{{ basvuru.Yas }}</td>
                           <td>{{ basvuru.Cinsiyet }}</td>
                           <td>{{ basvuru.OgrenimDurumu }}</td>
                           <td>{{ basvuru.AskerlikDurumu }}</td>

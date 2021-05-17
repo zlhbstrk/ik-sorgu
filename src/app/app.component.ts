@@ -12,8 +12,9 @@ export class AppComponent implements OnInit {
   isLogged:boolean = false;
   constructor(private service: KullaniciService, private ipServis: IpService){
     this.isLogged = this.service.isLoggedIn();
+    this.service.currentUser.subscribe((x) => (this.currentUser = x));
   }
-
+  currentUser!: any;
   ngOnInit(): void {
     this.ipServis.getIpAddress().subscribe((data:any)=>{
       localStorage.setItem('ip', data.ip);

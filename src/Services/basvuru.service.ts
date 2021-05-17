@@ -47,7 +47,8 @@ export class BasvuruService {
     "dil%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
     "programlamaDilleri%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
     "sertifikalar%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
-    "hobiler%20LIKE%20%27%25"+filtre+"%25%27";
+    "hobiler%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "yas%20LIKE%20%27%25"+filtre+"%25%27";
 
     return this.http
       .get<Basvuru[]>(this.baseURL + 'data/Basvuru?where=' + queryParams)
