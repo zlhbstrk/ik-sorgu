@@ -4,7 +4,7 @@ import { Subject } from 'rxjs';
 import { Basvuru } from 'src/Models/Basvuru';
 import { BasvuruService } from 'src/Services/basvuru.service';
 import Swal from 'sweetalert2';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-basvuru-listele',
   templateUrl: './basvuru-listele.component.html',
@@ -12,13 +12,13 @@ import Swal from 'sweetalert2';
 })
 export class BasvuruListeleComponent implements OnInit {
   constructor(
-    private basvuruSevis: BasvuruService,
+    private basvuruSevis: BasvuruService,public datepipe: DatePipe
   ) {}
 
   dtOptions = {};
   dtTrigger: Subject<Basvuru> = new Subject<Basvuru>();
 
-  basvurular: Basvuru[] = [];
+  basvurular: any[] = [];
   kayitSayi: number = 10;
   sayfa: number = 1;
   pageCount: number = 1;
@@ -37,23 +37,20 @@ export class BasvuruListeleComponent implements OnInit {
       responsive: true
     };
 
-    this.basvuruSevis.GetSearchAndFilter(0, this.kayitSayi, "-1").subscribe((data) => {
+    this.basvuruSevis.GetirBasvuru().subscribe((data) => {
+ 
+      data.forEach(x=>{
+        var date1:any = new Date();
+        var date2 :any= new Date(x.DogumTarihi);
+        //var dt = this.datepipe.transform(new Date() - (x.DogumTarihi as Date) , 'yyyy-MM-dd');
+        var yas = Math.floor((date1 - date2) / (1000 * 60 * 60 * 24));
+        x.DogumTarihi = yas.toString();
+
+        
+      })
       this.basvurular = data;
 
       this.dtTrigger.next();
-    });
-    this.basvuruSevis.Count().subscribe((count) => {
-      this.pageCount = count;
-    });
-  }
-
-  sayfaGetir(skipDeger: number, takeDeger: number | any, event?: number) {
-    this.sayfa = event ? event : 1;
-    this.kayitSayi = takeDeger;
-    let input:string = this.form.controls['searchInput'].value;
-    input = input.length == 0 ? "-1" : input;
-    this.basvuruSevis.GetSearchAndFilter(skipDeger, takeDeger, input).subscribe((data) => {
-      this.basvurular = data;
     });
   }
 
@@ -61,20 +58,19 @@ export class BasvuruListeleComponent implements OnInit {
     const input = this.form.controls['searchInput'].value;
     if(input)
     {
-      this.basvuruSevis.GetSearchAndFilter(0, this.kayitSayi, input).subscribe((data) => {
-        this.basvuru = data;
+      this.basvuruSevis.GetSearch(input).subscribe((data) => {
+        
+        data.forEach(x=>{
+          
+          x.DogumTarihi = 2021 - x.DogumTarihi.getFullYear();
+        })
 
-        this.basvuruSevis.FilterCount(input).subscribe((data) => {
-          this.pageCount = data;
-        });
-        this.basvuruSevis.Count().subscribe((count) => {
-          this.pageCount = count;
-        });
+        this.basvurular = data;
       });
     } 
   }
 
-  Sil(id: number) {
+  Sil(id: string) {
     Swal.fire({
       title: 'Silmek istediğinize emin misiniz?',
       text: 'Silinen kayıt geri getirilemez!',
@@ -93,7 +89,7 @@ export class BasvuruListeleComponent implements OnInit {
             'success'
           ).then(() => {
             this.basvuruSevis
-              .GetirBasvuru(0, this.kayitSayi)
+              .GetirBasvuru()
               .subscribe((data) => {
                 this.basvurular = data;
               });

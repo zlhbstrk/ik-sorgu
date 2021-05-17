@@ -46,8 +46,9 @@ export class LoginComponent implements OnInit {
         this.form.controls['Sifre'].value
       )
       .subscribe((data:any) => {
-        if (data.Result) {
-          localStorage.setItem('currentUser', JSON.stringify(data.Result));
+
+        if (data.userStatus=="ENABLED") {
+          localStorage.setItem('currentUser', JSON.stringify(data));
           Swal.fire({
             title: 'Başarılı',
             text: 'Kullanıcı giriş işlemi başarıyla tamamlandı.',

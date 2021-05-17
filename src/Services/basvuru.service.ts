@@ -7,68 +7,60 @@ import { Basvuru } from 'src/Models/Basvuru';
 import Swal from 'sweetalert2';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BasvuruService {
+  constructor(private http: HttpClient) {}
 
-  constructor(private http:HttpClient) { }
+  readonly baseURL = 'https://api.backendless.com/F3D79996-4F23-4BAC-ADE7-F8FE5E09C133/87D19798-66CA-49B1-B9F6-E3E6DBA404BF/';
 
-  readonly baseURL = 'https://localhost:5001/api/Basvuru/'
-
-  Ekle(basvuru:Basvuru) : Observable<Basvuru>
-  {
-   return this.http.post<Basvuru>(this.baseURL + 'Add', basvuru, Helper.getHeader()).pipe(catchError(this.handleError));
+  Ekle(basvuru: Basvuru): Observable<Basvuru> {
+    return this.http.post<Basvuru>(this.baseURL + 'data/basvuru', basvuru, Helper.getHeader()).pipe(catchError(this.handleError));
   }
 
-  GetirBasvuru(skipDeger:number, takeDeger:number) :Observable<Basvuru[]>
-  {
-    return this.http.get<Basvuru[]>(this.baseURL + "FullGetAll/" + skipDeger + "/" + takeDeger, Helper.getHeader()).pipe(catchError(this.handleError));
-  }
-  
-  Filtre(filtre:string) :Observable<Basvuru[]>
-  {
-    return this.http.get<Basvuru[]>(this.baseURL + "GetAllFilter/" + filtre, Helper.getHeader()).pipe(catchError(this.handleError));
-  }
-
-  Sil(id:number)
-  {
-    return this.http.delete(this.baseURL + "Delete/"+ id, Helper.getHeader()).pipe(catchError(this.handleError));
-  }
-
-  Duzenle(basvuru:Basvuru) : Observable<Basvuru>
-  {
-    return this.http.put<Basvuru>(this.baseURL + "Update", basvuru, Helper.getHeader()).pipe(catchError(this.handleError));
-  }
-
-  Getir(id:number) : Observable<Basvuru>
-  {
-    return this.http.get<Basvuru>(this.baseURL + "GetById/" + id, Helper.getHeader()).pipe(catchError(this.handleError));
-  }
-
-  Count() : Observable<number>
-  {
-    return this.http.get<number>(this.baseURL + "GetCount").pipe(catchError(this.handleError));
-  }
-
-  FilterCount(filter: string): Observable<number> {
+  GetirBasvuru(): Observable<any[]> {
     return this.http
-      .get<number>(this.baseURL + 'FilterGetCount/' + filter)
+      .get<Basvuru[]>(this.baseURL + 'data/basvuru')
       .pipe(catchError(this.handleError));
   }
 
-  GetSearchAndFilter(skipDeger: number, takeDeger: number, filtre: string): Observable<Basvuru[]> {
+  Sil(id: string) {
+    return this.http.delete(this.baseURL + 'data/Basvuru/' + id, Helper.getHeader()).pipe(catchError(this.handleError));
+  }
+
+  Getir(id: string): Observable<Basvuru> {
+    return this.http.get<Basvuru>(this.baseURL + 'data/Basvuru?where=objectId%3D%27' + id + '%27', Helper.getHeader()).pipe(catchError(this.handleError));
+  }
+
+  GetSearch(filtre: string): Observable<any[]> {
+    var queryParams = "ad%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "soyad%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "email%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "cinsiyet%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "ogrenimDurumu%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "askerlikDurumu%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "meslek%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "il%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "ilce%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "mahalle%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "adres%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "dil%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "programlamaDilleri%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "sertifikalar%20LIKE%20%27%25"+filtre+"%25%27"+ "%20or%20"+
+    "hobiler%20LIKE%20%27%25"+filtre+"%25%27";
+
     return this.http
-      .get<Basvuru[]>(this.baseURL + 'GetSearchAndFilter/'  + skipDeger + '/' + takeDeger + '/' + filtre)
+      .get<Basvuru[]>(this.baseURL + 'data/Basvuru?where=' + queryParams)
       .pipe(catchError(this.handleError));
   }
-  
-  handleError(err: HttpErrorResponse){
+
+  handleError(err: HttpErrorResponse) {
     Swal.fire({
-      title: "Hatalı",
-      text: "Başvuru servisinde hata oluştu!",
+      title: 'Hatalı',
+      text: 'Başvuru servisinde hata oluştu!',
       icon: 'error',
-      confirmButtonText:'Tamam'
-    })
+      confirmButtonText: 'Tamam',
+    });
     return throwError('Başvuru servisinde hata oluştu!');
   }
 }

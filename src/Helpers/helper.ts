@@ -12,10 +12,7 @@ export class Helper {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'current-user-id': kullanici.Id.toString(),
-        'current-user-name': kullanici.Ad,
-        'current-user-type': kullanici.Yetki.toString(),
-        'current-user-password':kullanici.Sifre,
+        'current-user-name': kullanici.Name,
         'ip-address': ip,
       }),
     };

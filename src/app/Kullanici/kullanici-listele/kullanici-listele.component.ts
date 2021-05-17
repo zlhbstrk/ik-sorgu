@@ -28,25 +28,21 @@ export class KullaniciListeleComponent implements OnInit {
       responsive: true
     };
 
-    this.KullaniciServis.GetirKullanici(0, this.kayitSayi).subscribe((data) => {
+    this.KullaniciServis.GetirKullanici().subscribe((data) => {
       this.kullanicilar = data
       this.dtTrigger.next();
     });
-
-    this.KullaniciServis.Count().subscribe((count) => {
-      this.pageCount = count;
-    })
   }
 
   sayfaGetir(skipDeger:number, takeDeger:number|any, event?:number){
     this.sayfa = event ? event: 1;
     this.kayitSayi = takeDeger;
-    this.KullaniciServis.GetirKullanici(skipDeger, takeDeger).subscribe((data) => {
+    this.KullaniciServis.GetirKullanici().subscribe((data) => {
       this.kullanicilar = data;
     });
   }
 
-  Sil(id: number) {
+  Sil(id: string) {
     Swal.fire({
       title: 'Silmek istediğinize emin misiniz?',
       text: 'Silinen kayıt geri getirilemez!',
@@ -64,7 +60,7 @@ export class KullaniciListeleComponent implements OnInit {
             'Silme işlemi başarıyla tamamlandı.',
             'success'
           ).then(() => {
-            this.KullaniciServis.GetirKullanici(0, this.kayitSayi).subscribe((data) => {
+            this.KullaniciServis.GetirKullanici().subscribe((data) => {
               this.kullanicilar = data;
             });
           });

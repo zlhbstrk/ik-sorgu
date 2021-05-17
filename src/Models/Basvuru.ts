@@ -1,5 +1,5 @@
 export class Basvuru {
-    Id!:number;
+    Id!:string;
     Ad!: string;
     Soyad!: string;
     Email!: string;

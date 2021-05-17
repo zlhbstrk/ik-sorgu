@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { KullaniciService } from 'src/Services/kullanici.service';
 
-
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
@@ -15,7 +14,6 @@ export class NavComponent implements OnInit {
   kulAdi:string = "";
 
   ngOnInit(): void {
-    this.isAdmin = this.kullaniciServis.isAdmin();
     this.kulAdi = this.kullaniciServis.kulAdi();  
   }
 }

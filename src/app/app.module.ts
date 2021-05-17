@@ -16,7 +16,6 @@ import { RouterModule } from '@angular/router';
 import { KullaniciListeleComponent } from './Kullanici/kullanici-listele/kullanici-listele.component';
 import { BasvuruListeleComponent } from './Basvuru/basvuru-listele/basvuru-listele.component';
 import { LogListeleComponent } from './Log/log-listele/log-listele.component';
-import { KullaniciDuzenleComponent } from './Kullanici/kullanici-duzenle/kullanici-duzenle.component';
 import { LoginComponent } from './Login/login/login.component';
 import { KullaniciService } from 'src/Services/kullanici.service';
 import { LoginGuard } from './Login/login/login.guard';
@@ -24,8 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng2OrderModule } from 'ng2-order-pipe';
 import { NgSearchPipe } from 'ng-search-pipe';
-import { SifreDuzenleComponent } from './Sifre/sifre-duzenle/sifre-duzenle.component';
-
+import { DatePipe } from '@angular/common'
 
 @NgModule({
   declarations: [
@@ -38,9 +36,7 @@ import { SifreDuzenleComponent } from './Sifre/sifre-duzenle/sifre-duzenle.compo
     KullaniciListeleComponent,
     BasvuruListeleComponent,
     LogListeleComponent,
-    KullaniciDuzenleComponent,
     LoginComponent,
-    SifreDuzenleComponent,
   ],
   imports: [
     BrowserModule,
@@ -56,7 +52,7 @@ import { SifreDuzenleComponent } from './Sifre/sifre-duzenle/sifre-duzenle.compo
     NgSearchPipe,
     FormsModule
   ],
-  providers: [KullaniciService, LoginGuard],
+  providers: [KullaniciService, LoginGuard,DatePipe],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

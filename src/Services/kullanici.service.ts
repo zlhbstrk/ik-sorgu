@@ -1,7 +1,4 @@
-import {
-  HttpClient,
-  HttpErrorResponse,
-} from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, throwError } from 'rxjs';
@@ -15,74 +12,36 @@ export class KullaniciService {
   constructor(private http: HttpClient, private router: Router) {}
 
   loggedIn = false;
-  readonly baseURL = 'https://localhost:5001/api/Kullanici/';
+  readonly baseURL = 'https://api.backendless.com/F3D79996-4F23-4BAC-ADE7-F8FE5E09C133/87D19798-66CA-49B1-B9F6-E3E6DBA404BF/';
 
   Ekle(kullanici: Kullanici): Observable<Kullanici> {
-    return this.http
-      .post<Kullanici>(this.baseURL + 'Add', kullanici, Helper.getHeader())
-      .pipe(catchError(this.handleError));
-  }
-  
-  GetirKullanici(
-    skipDeger: number,
-    takeDeger: number
-  ): Observable<Kullanici[]> {
-    return this.http
-      .get<Kullanici[]>(this.baseURL + 'GetAll/' + skipDeger + '/' + takeDeger, Helper.getHeader())
-      .pipe(catchError(this.handleError));
+    return this.http.post<Kullanici>(this.baseURL + 'users/register', kullanici, Helper.getHeader()).pipe(catchError(this.handleError));
   }
 
-  Sil(id: number) {
-    return this.http
-      .delete(this.baseURL + 'Delete/' + id, Helper.getHeader())
-      .pipe(catchError(this.handleError));
+  GetirKullanici(): Observable<Kullanici[]> {
+    return this.http.get<Kullanici[]>(this.baseURL + 'data/users', Helper.getHeader()).pipe(catchError(this.handleError));
   }
 
-  SifreDegistir(kullanici: any):Observable<any> {
-    return this.http
-      .put<any>(this.baseURL + 'PasswordChange/' + kullanici.Id, kullanici, Helper.getHeader())
-      .pipe(catchError(this.handleError));
+  Sil(id: string) {
+    return this.http.delete(this.baseURL + 'data/users/' + id, Helper.getHeader()).pipe(catchError(this.handleError));
   }
 
-  Duzenle(kullanici: Kullanici): Observable<Kullanici> {
+  Getir(id: string): Observable<Kullanici> {
     return this.http
-      .put<Kullanici>(this.baseURL + 'Update', kullanici, Helper.getHeader())
-      .pipe(catchError(this.handleError));
-  }
-
-  Getir(id: number): Observable<Kullanici> {
-    return this.http
-      .get<Kullanici>(this.baseURL + 'GetById/' + id, Helper.getHeader())
-      .pipe(catchError(this.handleError));
-  }
-
-  Count(): Observable<number> {
-    return this.http
-      .get<number>(this.baseURL + 'GetCount')
+      .get<Kullanici>(this.baseURL + 'data/users?where=objectId%3D%27' + id + '%27', Helper.getHeader())
       .pipe(catchError(this.handleError));
   }
 
   Login(email: string, sifre: string): Observable<Kullanici> {
     return this.http
-      .get<Kullanici>(this.baseURL + 'Login/' + email + '/' + sifre, Helper.getHeaderUnAuth(email))
+      .post<Kullanici>(this.baseURL + 'users/login', { login: email, password: sifre }, Helper.getHeaderUnAuth(email))
       .pipe(catchError(this.handleError));
   }
 
-  isAdmin() {
-    const currentUser = JSON.parse(
-      localStorage.getItem('currentUser')!
-    ) as Kullanici;
-    if (currentUser.Yetki == 1) {
-      return true;
-    } else {
-      return false;
-    }
+  kulAdi() {
+    const currentUser = JSON.parse(localStorage.getItem('currentUser')!) as any;
+    return currentUser.name;
   }
-
- kulAdi() {
-   const currentUser = JSON.parse(localStorage.getItem('currentUser')!) as Kullanici;
-   return currentUser.Ad;
- }
 
   isLoggedIn() {
     if (localStorage.getItem('currentUser')) {
@@ -93,9 +52,8 @@ export class KullaniciService {
   }
 
   logOut() {
-  
     this.loggedIn = false;
-    return this.http.get(this.baseURL + 'Logout', Helper.getHeader()).pipe(catchError(this.handleError));
+    return null;
   }
 
   handleError(err: HttpErrorResponse) {
